@@ -1,0 +1,17 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: sevenhell_development
+  pool: 5
+  username: Tony
+  host: localhost
+  password:
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: sevenhell_test
+  pool: 5
+  username: Tony
+  host: localhost
+  password:
