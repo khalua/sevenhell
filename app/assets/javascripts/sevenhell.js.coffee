@@ -12,8 +12,12 @@ window.app =
     app.exercise_incrementer = setInterval(app.exercise_timer, 1000)
     $('#start').hide()
 
-
   exercise_timer: ->
+    $('#exercises').show()
+    if app.exercise_index is 0
+      app.exercise_index++
+    $('.exer' + (app.exercise_index - 1)).hide()
+    $('.exer' + app.exercise_index).fadeIn()
     console.log('exercise ' + app.counter)
     app.counter++
     $('.clock').text(app.counter)
@@ -33,16 +37,14 @@ window.app =
     app.counter++
     $('.clock').text(app.counter)
     $('.type').text('Rest')
+    $('#exercises').hide()
     if app.counter is 5
       clearInterval(app.rest_incrementer)
       app.counter = 0
       app.next_exercise()
 
   next_exercise: ->
-    $('.exer' + (app.exercise_index - 1)).hide()
-    $('.exer' + app.exercise_index).fadeIn()
     app.go_exercise()
-
 
 
 $(document).ready(app.ready)
