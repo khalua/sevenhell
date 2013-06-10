@@ -4,7 +4,8 @@ window.app =
   ready: ->
     $('#timer').hide()
     $('#start').click(app.go_exercise)
-    $('.exer1, .exer2').hide()
+    $('[class^="exer"]').hide()
+    $('#finished').hide()
 
   go_exercise: ->
     $('#timer').show()
@@ -22,7 +23,7 @@ window.app =
     app.counter++
     $('.clock').text(app.counter)
     $('.type').text('Exercise!')
-    if app.counter is 10
+    if app.counter is 1 # exercise timer in seconds
       app.exercise_index++
       clearInterval(app.exercise_incrementer)
       app.counter = 0
@@ -33,18 +34,29 @@ window.app =
     app.rest_incrementer = setInterval(app.rest_timer, 1000)
 
   rest_timer: ->
-    console.log('rest ' + app.counter)
-    app.counter++
-    $('.clock').text(app.counter)
-    $('.type').text('Rest')
-    $('#exercises').hide()
-    if app.counter is 5
-      clearInterval(app.rest_incrementer)
-      app.counter = 0
-      app.next_exercise()
+    if app.exercise_index is 18 #18 for prod
+      app.finished()
+    else
+      console.log('rest ' + app.counter)
+      app.counter++
+      $('.clock').text(app.counter)
+      $('.type').text('Rest')
+      $('#exercises').fadeOut()
+      if app.counter is 1 # rest timer in seconds
+        clearInterval(app.rest_incrementer)
+        app.counter = 0
+        app.next_exercise()
 
   next_exercise: ->
     app.go_exercise()
+
+  finished: ->
+    $('#exercises').fadeOut()
+    $('#finished').fadeIn()
+    $('#timer').fadeOut()
+    clearInterval(app.rest_incrementer)
+    clearInterval(app.exercise_incrementer)
+
 
 
 $(document).ready(app.ready)
